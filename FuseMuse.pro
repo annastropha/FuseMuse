@@ -38,13 +38,18 @@ FORMS += \
 DISTFILES += \
     notes.txt
 
-unix|win32: LIBS += -llibquazip5.dll
-
 RESOURCES += \
     fusemuse.qrc
+
+
+win32: LIBS += -llibquazip5.dll
+
+unix:!macx: LIBS += -lquazip5
+
 
 copydata.commands = $(COPY_DIR) \"$$PWD/res\" \"$$OUT_PWD\"
 first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
+

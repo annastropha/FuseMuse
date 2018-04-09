@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
-    <height>523</height>
+    <width>681</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,6 +94,18 @@
       </item>
       <item>
        <widget class="QTreeWidget" name="compositionTree">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>350</width>
+          <height>0</height>
+         </size>
+        </property>
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
@@ -202,24 +214,24 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>542</width>
-     <height>21</height>
+     <width>681</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
     <addaction name="actionClear_Instrument_Hierarchy"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuModule">
     <property name="title">
-     <string>Module</string>
+     <string>&amp;Module</string>
     </property>
     <widget class="QMenu" name="menuLoad">
      <property name="title">
-      <string>Load</string>
+      <string>&amp;Load</string>
      </property>
      <addaction name="actionLoad_Instruments"/>
      <addaction name="actionLoad_Driver_Modules"/>
@@ -227,7 +239,7 @@
     </widget>
     <widget class="QMenu" name="menuClear">
      <property name="title">
-      <string>Clear</string>
+      <string>&amp;Clear</string>
      </property>
      <addaction name="actionClear_Instruments"/>
      <addaction name="actionClear_Driver_Modules"/>
@@ -241,42 +253,42 @@
   </widget>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>&amp;Exit</string>
    </property>
   </action>
   <action name="actionClear_Instrument_Hierarchy">
    <property name="text">
-    <string>Delete Instrument Hierarchy</string>
+    <string>&amp;Delete Instrument Hierarchy</string>
    </property>
   </action>
   <action name="actionLoad_Instruments">
    <property name="text">
-    <string>Load Instruments</string>
+    <string>&amp;Load Instruments</string>
    </property>
   </action>
   <action name="actionLoad_Driver_Modules">
    <property name="text">
-    <string>Load Driver Modules</string>
+    <string>Load &amp;Driver Modules</string>
    </property>
   </action>
   <action name="actionLoad_Control_Modules">
    <property name="text">
-    <string>Load Control Modules</string>
+    <string>Load &amp;Control Modules</string>
    </property>
   </action>
   <action name="actionClear_Instruments">
    <property name="text">
-    <string>Clear Instruments</string>
+    <string>&amp;Clear Instruments</string>
    </property>
   </action>
   <action name="actionClear_Driver_Modules">
    <property name="text">
-    <string>Clear Driver Modules</string>
+    <string>Clear &amp;Driver Modules</string>
    </property>
   </action>
   <action name="actionClear_Control_Modules">
    <property name="text">
-    <string>Clear Control Modules</string>
+    <string>Clear Control &amp;Modules</string>
    </property>
   </action>
  </widget>
