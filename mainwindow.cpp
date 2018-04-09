@@ -134,6 +134,7 @@ void MainWindow::on_addMelodicButton_clicked()
     QTreeWidget* tree = ui->compositionTree;
     QTreeWidgetItem* next = new QTreeWidgetItem(tree, Qt::UserRole);
     next->setText(0, packets[ui->packetComboBox->currentData().toString()]["packet_name"]);
+    next->setData(0, Qt::ToolTipRole, "melodic");
     next->setData(0, Qt::UserRole, QVariant(QString("TEST")));
 }
 
@@ -149,6 +150,7 @@ void MainWindow::on_addHarmonicButton_clicked()
     } else {
         QTreeWidgetItem* next = new QTreeWidgetItem(cur, Qt::UserRole);
         next->setText(0, packets[ui->packetComboBox->currentData().toString()]["packet_name"]);
+        next->setData(0, Qt::ToolTipRole, "harmonic");
         next->setData(0, Qt::UserRole, QVariant(QString("TEST")));
     }
     tree->expandAll();
@@ -166,6 +168,7 @@ void MainWindow::on_addSupportingButton_clicked()
     } else {
         QTreeWidgetItem* next = new QTreeWidgetItem(cur, Qt::UserRole);
         next->setText(0, packets[ui->packetComboBox->currentData().toString()]["packet_name"]);
+        next->setData(0, Qt::ToolTipRole, "supporting");
         next->setData(0, Qt::UserRole, QVariant(QString("TEST")));
     }
     tree->expandAll();
