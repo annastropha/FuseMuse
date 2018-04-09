@@ -1,0 +1,1 @@
+A packet removed from the selector may remain in the composition tree.  The key is a filepath and the packetdata remains in the map, so it can still be used just fine.

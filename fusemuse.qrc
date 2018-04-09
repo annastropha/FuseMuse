@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/base/FuseMuseLogo.png</file>
+    </qresource>
+</RCC>

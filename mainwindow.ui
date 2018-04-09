@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>542</width>
+    <height>523</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>FuseMuse: Modular Procedural Generation</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <layout class="QHBoxLayout" name="CompositionTreeHorizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="packetSelectorVerticalLayout">
+        <item>
+         <widget class="QLabel" name="fmLogo">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="fusemuse.qrc">:/res/base/FuseMuseLogo.png</pixmap>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="packetComboBox">
+          <property name="currentText">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="packetDescBox">
+          <property name="placeholderText">
+           <string>Select a Packet.  A description will appear here</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addMelodicButton">
+          <property name="text">
+           <string>Add Melodic</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addHarmonicButton">
+          <property name="text">
+           <string>Add Harmonic</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="addSupportingButton">
+          <property name="text">
+           <string>Add Supporting</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::MinimumExpanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>10</width>
+            <height>10</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="removeInstrumentButton">
+          <property name="text">
+           <string>Remove Instrument</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTreeWidget" name="compositionTree">
+        <attribute name="headerVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="moduleHorizontalLayout">
+      <item>
+       <layout class="QVBoxLayout" name="driverModuleVerticalLayout">
+        <item>
+         <widget class="QComboBox" name="driverComboBox"/>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="driverModuleDescBox">
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustIgnored</enum>
+          </property>
+          <property name="placeholderText">
+           <string>Select a Driver Module.  A description will appear here</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="controlModuleVerticalLayout">
+        <item>
+         <widget class="QComboBox" name="controlComboBox"/>
+        </item>
+        <item>
+         <widget class="QTextBrowser" name="controlModuleDescBox">
+          <property name="placeholderText">
+           <string>Select a Control Module.  A description will appear here</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="composeButtonHorizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="composeButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>150</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>8</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Compose</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>542</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionClear_Instrument_Hierarchy"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuModule">
+    <property name="title">
+     <string>Module</string>
+    </property>
+    <widget class="QMenu" name="menuLoad">
+     <property name="title">
+      <string>Load</string>
+     </property>
+     <addaction name="actionLoad_Instruments"/>
+     <addaction name="actionLoad_Driver_Modules"/>
+     <addaction name="actionLoad_Control_Modules"/>
+    </widget>
+    <widget class="QMenu" name="menuClear">
+     <property name="title">
+      <string>Clear</string>
+     </property>
+     <addaction name="actionClear_Instruments"/>
+     <addaction name="actionClear_Driver_Modules"/>
+     <addaction name="actionClear_Control_Modules"/>
+    </widget>
+    <addaction name="menuLoad"/>
+    <addaction name="menuClear"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuModule"/>
+  </widget>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionClear_Instrument_Hierarchy">
+   <property name="text">
+    <string>Delete Instrument Hierarchy</string>
+   </property>
+  </action>
+  <action name="actionLoad_Instruments">
+   <property name="text">
+    <string>Load Instruments</string>
+   </property>
+  </action>
+  <action name="actionLoad_Driver_Modules">
+   <property name="text">
+    <string>Load Driver Modules</string>
+   </property>
+  </action>
+  <action name="actionLoad_Control_Modules">
+   <property name="text">
+    <string>Load Control Modules</string>
+   </property>
+  </action>
+  <action name="actionClear_Instruments">
+   <property name="text">
+    <string>Clear Instruments</string>
+   </property>
+  </action>
+  <action name="actionClear_Driver_Modules">
+   <property name="text">
+    <string>Clear Driver Modules</string>
+   </property>
+  </action>
+  <action name="actionClear_Control_Modules">
+   <property name="text">
+    <string>Clear Control Modules</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="fusemuse.qrc"/>
+ </resources>
+ <connections/>
+</ui>
