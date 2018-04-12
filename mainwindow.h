@@ -50,6 +50,10 @@ private slots:
 
     void on_actionClear_Instrument_Hierarchy_triggered();
 
+    void on_composeButton_clicked();
+
+    QString execute(FMZipInfo zip, QString mode, QString input);
+
 private:
     //load zips from a directory.  Args are
     //dir, name property name, combobox to load into, map between path and properties
