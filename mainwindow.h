@@ -18,6 +18,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    //Maps between the absolute path of a zip and the properties map of the same zip
+    QMap<QString, FMZipInfo> packets;
+    QMap<QString, FMZipInfo> driverModules;
+    QMap<QString, FMZipInfo> controlModules;
 
 private slots:
     void on_packetComboBox_activated(int index);
@@ -52,21 +56,19 @@ private slots:
 
     void on_composeButton_clicked();
 
-    QString execute(FMZipInfo zip, QString mode, QString input);
-
 private:
     //load zips from a directory.  Args are
     //dir, name property name, combobox to load into, map between path and properties
     void loadZips(QString, QString, QComboBox*, QMap<QString, FMZipInfo>&);
     Ui::MainWindow *ui;
-    //Maps between the absolute path of a zip and the properties map of the same zip
-    QMap<QString, FMZipInfo> packets;
-    QMap<QString, FMZipInfo> driverModules;
-    QMap<QString, FMZipInfo> controlModules;
 
     const QString packetPath = "./res/default_packets";
     const QString driverModulePath = "./res/default_driver_modules";
     const QString controlModulePath = "./res/default_control_modules";
 };
+
+QString execute(QString zipPath, QString mode, QString input);
+
+extern MainWindow* mw;
 
 #endif // MAINWINDOW_H

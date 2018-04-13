@@ -235,32 +235,47 @@ void MainWindow::on_composeButton_clicked()
 {
     QTreeWidgetItem * tli = ui->compositionTree->topLevelItem(0);
     QString file = tli->data(0,Qt::UserRole).toString();
-    execute(packets[file], "melodic", "");
+    execute(packets[file]["ZipFilePath"], "melodic", "");
 }
 
-QString MainWindow::execute(FMZipInfo zip, QString mode, QString input){
-    QProcess *process = new QProcess(this);
-    if (zip["exec_type"] == "exe") {
-        JlCompress::extractDir(zip["ZipFilePath"], "./temp");
+std::string executeStd(std::string zipPath, std::string mode, std::string input) {
+    return execute(QString::fromStdString(zipPath),
+                   QString::fromStdString(mode),
+                   QString::fromStdString(input)
+                   ).toStdString();
+}
+
+QString execute(QString zipPath, QString mode, QString input){
+    QProcess *process = new QProcess(mw);
+    FMZipInfo zipInfo;
+    if(mode == "driver") {
+        zipInfo = mw->driverModules[zipPath];
+    } else if(mode == "control" || mode == "finalcontrol") {
+        zipInfo = mw->controlModules[zipPath];
+    } else {
+        zipInfo = mw->packets[zipPath];
+    }
+    QString execType = zipInfo["exec_type"];
+    if (execType == "exe") {
+        JlCompress::extractDir(zipPath, "./temp");
         QString program = "./temp/Doukutsu.exe";
         process->start(program, QStringList());
-    }else if (zip["exec_type"] == "python") {
+    }else if (execType == "python") {
         QString program = "python";
-        process->start(program, QStringList() << zip["ZipFilePath"]);
-    }else {// if(zip["exec_type"] == "java") {
+        process->start(program, QStringList() << zipPath);
+    }else {// if(execType == "java") {
         QString program = "java";
-        process->start(program, QStringList() << "-jar" << zip["ZipFilePath"]);
+        process->start(program, QStringList() << "-jar" << zipPath);
     }
     process->write(mode.toStdString().c_str(), mode.length()+1);
     process->write("\n", 2);
     process->write(input.toStdString().c_str(), input.length()+1);
     process->waitForFinished(-1);
     QString output = QString(process->readAllStandardOutput());
-    if (zip["exec_type"] == "exe") {
+    if (execType == "exe") {
         QDir("./temp").removeRecursively();
     }
     delete process;
     std::cout << output.toStdString() << std::endl;
     return output;
 }
-
