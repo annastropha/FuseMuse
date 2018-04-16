@@ -220,18 +220,18 @@
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>Fi&amp;le</string>
+     <string>File</string>
     </property>
     <addaction name="actionClear_Instrument_Hierarchy"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuModule">
     <property name="title">
-     <string>&amp;Module</string>
+     <string>Module</string>
     </property>
     <widget class="QMenu" name="menuLoad">
      <property name="title">
-      <string>&amp;Load</string>
+      <string>Load</string>
      </property>
      <addaction name="actionLoad_Instruments"/>
      <addaction name="actionLoad_Driver_Modules"/>
@@ -239,7 +239,7 @@
     </widget>
     <widget class="QMenu" name="menuClear">
      <property name="title">
-      <string>&amp;Clear</string>
+      <string>Clear</string>
      </property>
      <addaction name="actionClear_Instruments"/>
      <addaction name="actionClear_Driver_Modules"/>
@@ -253,42 +253,42 @@
   </widget>
   <action name="actionExit">
    <property name="text">
-    <string>&amp;Exit</string>
+    <string>Exit</string>
    </property>
   </action>
   <action name="actionClear_Instrument_Hierarchy">
    <property name="text">
-    <string>&amp;Delete Instrument Hierarchy</string>
+    <string>Delete Instrument Hierarchy</string>
    </property>
   </action>
   <action name="actionLoad_Instruments">
    <property name="text">
-    <string>&amp;Load Instruments</string>
+    <string>Load Instruments</string>
    </property>
   </action>
   <action name="actionLoad_Driver_Modules">
    <property name="text">
-    <string>Load &amp;Driver Modules</string>
+    <string>Load Driver Modules</string>
    </property>
   </action>
   <action name="actionLoad_Control_Modules">
    <property name="text">
-    <string>Load &amp;Control Modules</string>
+    <string>Load Control Modules</string>
    </property>
   </action>
   <action name="actionClear_Instruments">
    <property name="text">
-    <string>&amp;Clear Instruments</string>
+    <string>Clear Instruments</string>
    </property>
   </action>
   <action name="actionClear_Driver_Modules">
    <property name="text">
-    <string>Clear &amp;Driver Modules</string>
+    <string>Clear Driver Modules</string>
    </property>
   </action>
   <action name="actionClear_Control_Modules">
    <property name="text">
-    <string>Clear Control &amp;Modules</string>
+    <string>Clear Control Modules</string>
    </property>
   </action>
  </widget>
