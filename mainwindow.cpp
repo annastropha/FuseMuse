@@ -13,6 +13,9 @@
 
 #include <iostream>
 
+#include <libfm/utilities.h>
+#include <libfm/packetpart.h>
+
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -231,23 +234,34 @@ void MainWindow::on_actionClear_Instrument_Hierarchy_triggered()
     ui->compositionTree->clear();
 }
 
-void MainWindow::on_composeButton_clicked()
-{
-    QTreeWidgetItem * tli = ui->compositionTree->topLevelItem(0);
-    QString file = tli->data(0,Qt::UserRole).toString();
-    execute(packets[file]["ZipFilePath"], "melodic", "");
-}
-
 std::string executeStd(std::string zipPath, std::string mode, std::string input) {
-    return execute(QString::fromStdString(zipPath),
+    QString a = execute(QString::fromStdString(zipPath),
                    QString::fromStdString(mode),
                    QString::fromStdString(input)
-                   ).toStdString();
+                   );
+    return a.toStdString();
+}
+
+void MainWindow::on_composeButton_clicked()
+{
+    /*QTreeWidgetItem * tli = ui->compositionTree->topLevelItem(0);
+    QString file = tli->data(0,Qt::UserRole).toString();
+    execute(packets[file]["ZipFilePath"], "melodic", "");*/
+    PacketPart* tree = new PacketPart();
+    tree->mode = "melodic";
+    tree->executed = false;
+    tree->parent = NULL;
+    tree->packetPath = ui->compositionTree->topLevelItem(0)->data(0, Qt::UserRole).toString().toStdString();
+    executeShell(executeStd, tree, ui->driverComboBox->currentData().toString().toStdString(), ui->controlComboBox->currentData().toString().toStdString());
 }
 
 QString execute(QString zipPath, QString mode, QString input){
+
+    std::cout << "=======\n INPUT\n=======\n" << input.toStdString() << "\n=======\n" << std::endl;
+
     QProcess *process = new QProcess(mw);
     FMZipInfo zipInfo;
+    std::cout << "Path: " << zipPath.toStdString() << std::endl;
     if(mode == "driver") {
         zipInfo = mw->driverModules[zipPath];
     } else if(mode == "control" || mode == "finalcontrol") {
@@ -256,9 +270,10 @@ QString execute(QString zipPath, QString mode, QString input){
         zipInfo = mw->packets[zipPath];
     }
     QString execType = zipInfo["exec_type"];
+    std::cout << "Exec type: " << execType.toStdString() << std::endl;
     if (execType == "exe") {
         JlCompress::extractDir(zipPath, "./temp");
-        QString program = "./temp/Doukutsu.exe";
+        QString program = "./temp/main.exe";
         process->start(program, QStringList());
     }else if (execType == "python") {
         QString program = "python";
@@ -267,15 +282,28 @@ QString execute(QString zipPath, QString mode, QString input){
         QString program = "java";
         process->start(program, QStringList() << "-jar" << zipPath);
     }
-    process->write(mode.toStdString().c_str(), mode.length()+1);
-    process->write("\n", 2);
-    process->write(input.toStdString().c_str(), input.length()+1);
+    process->waitForStarted(-1);
+    if(mode.length() > 0){
+        std::cout << "Mode: " << mode.toStdString() << std::endl;
+        process->write(mode.toStdString().c_str(), mode.length()+1);
+        process->write(" " , 2);
+        process->write("\n", 2);
+    }
+    if(input.length() > 0){
+        std::cout << "sending input" << std::endl;
+        process->write(input.toStdString().c_str(), input.length()+1);
+    }
+    process->closeWriteChannel();
+    process->waitForReadyRead(-1);
     process->waitForFinished(-1);
     QString output = QString(process->readAllStandardOutput());
-    if (execType == "exe") {
-        QDir("./temp").removeRecursively();
-    }
+    QString err = QString(process->readAllStandardError());
+
     delete process;
+    std::cout << "-----" << std::endl;
     std::cout << output.toStdString() << std::endl;
+    std::cout << "-----" << std::endl;
+    std::cout << err.toStdString() << std::endl;
+    std::cout << "-----" << std::endl;
     return output;
 }
