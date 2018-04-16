@@ -3,13 +3,18 @@
 
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
+#include <quazip5/JlCompress.h>
 
 #include <qdir.h>
 #include <qfile.h>
 #include <qfiledialog.h>
 #include <qmessagebox.h>
+#include <qprocess.h>
 
 #include <iostream>
+
+#include <libfm/utilities.h>
+#include <libfm/packetpart.h>
 
 
 
@@ -133,15 +138,17 @@ void MainWindow::on_addMelodicButton_clicked()
 {
     QTreeWidget* tree = ui->compositionTree;
     QTreeWidgetItem* next = new QTreeWidgetItem(tree, Qt::UserRole);
-    next->setText(0, packets[ui->packetComboBox->currentData().toString()]["packet_name"]);
+    QString jarfile = ui->packetComboBox->currentData().toString();
+    next->setText(0, packets[jarfile]["packet_name"]);
     next->setData(0, Qt::ToolTipRole, "melodic");
-    next->setData(0, Qt::UserRole, QVariant(QString("TEST")));
+    next->setData(0, Qt::UserRole, QVariant(jarfile));
 }
 
 void MainWindow::on_addHarmonicButton_clicked()
 {
     QTreeWidget* tree = ui->compositionTree;
     QTreeWidgetItem* cur = tree->currentItem();
+    QString jarfile = ui->packetComboBox->currentData().toString();
     if(!cur) {
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Warning);
@@ -149,9 +156,9 @@ void MainWindow::on_addHarmonicButton_clicked()
         msgBox.exec();
     } else {
         QTreeWidgetItem* next = new QTreeWidgetItem(cur, Qt::UserRole);
-        next->setText(0, packets[ui->packetComboBox->currentData().toString()]["packet_name"]);
+        next->setText(0, packets[jarfile]["packet_name"]);
         next->setData(0, Qt::ToolTipRole, "harmonic");
-        next->setData(0, Qt::UserRole, QVariant(QString("TEST")));
+        next->setData(0, Qt::UserRole, QVariant(jarfile));
     }
     tree->expandAll();
 }
@@ -160,6 +167,7 @@ void MainWindow::on_addSupportingButton_clicked()
 {
     QTreeWidget* tree = ui->compositionTree;
     QTreeWidgetItem* cur = tree->currentItem();
+    QString jarfile = ui->packetComboBox->currentData().toString();
     if(!cur) {
         QMessageBox msgBox;
         msgBox.setIcon(QMessageBox::Warning);
@@ -167,9 +175,9 @@ void MainWindow::on_addSupportingButton_clicked()
         msgBox.exec();
     } else {
         QTreeWidgetItem* next = new QTreeWidgetItem(cur, Qt::UserRole);
-        next->setText(0, packets[ui->packetComboBox->currentData().toString()]["packet_name"]);
+        next->setText(0, packets[jarfile]["packet_name"]);
         next->setData(0, Qt::ToolTipRole, "supporting");
-        next->setData(0, Qt::UserRole, QVariant(QString("TEST")));
+        next->setData(0, Qt::UserRole, QVariant(jarfile));
     }
     tree->expandAll();
 }
@@ -224,4 +232,78 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionClear_Instrument_Hierarchy_triggered()
 {
     ui->compositionTree->clear();
+}
+
+std::string executeStd(std::string zipPath, std::string mode, std::string input) {
+    QString a = execute(QString::fromStdString(zipPath),
+                   QString::fromStdString(mode),
+                   QString::fromStdString(input)
+                   );
+    return a.toStdString();
+}
+
+void MainWindow::on_composeButton_clicked()
+{
+    /*QTreeWidgetItem * tli = ui->compositionTree->topLevelItem(0);
+    QString file = tli->data(0,Qt::UserRole).toString();
+    execute(packets[file]["ZipFilePath"], "melodic", "");*/
+    PacketPart* tree = new PacketPart();
+    tree->mode = "melodic";
+    tree->executed = false;
+    tree->parent = NULL;
+    tree->packetPath = ui->compositionTree->topLevelItem(0)->data(0, Qt::UserRole).toString().toStdString();
+    executeShell(executeStd, tree, ui->driverComboBox->currentData().toString().toStdString(), ui->controlComboBox->currentData().toString().toStdString());
+}
+
+QString execute(QString zipPath, QString mode, QString input){
+
+    std::cout << "=======\n INPUT\n=======\n" << input.toStdString() << "\n=======\n" << std::endl;
+
+    QProcess *process = new QProcess(mw);
+    FMZipInfo zipInfo;
+    std::cout << "Path: " << zipPath.toStdString() << std::endl;
+    if(mode == "driver") {
+        zipInfo = mw->driverModules[zipPath];
+    } else if(mode == "control" || mode == "finalcontrol") {
+        zipInfo = mw->controlModules[zipPath];
+    } else {
+        zipInfo = mw->packets[zipPath];
+    }
+    QString execType = zipInfo["exec_type"];
+    std::cout << "Exec type: " << execType.toStdString() << std::endl;
+    if (execType == "exe") {
+        JlCompress::extractDir(zipPath, "./temp");
+        QString program = "./temp/main.exe";
+        process->start(program, QStringList());
+    }else if (execType == "python") {
+        QString program = "python";
+        process->start(program, QStringList() << zipPath);
+    }else {// if(execType == "java") {
+        QString program = "java";
+        process->start(program, QStringList() << "-jar" << zipPath);
+    }
+    process->waitForStarted(-1);
+    if(mode.length() > 0){
+        std::cout << "Mode: " << mode.toStdString() << std::endl;
+        process->write(mode.toStdString().c_str(), mode.length()+1);
+        process->write(" " , 2);
+        process->write("\n", 2);
+    }
+    if(input.length() > 0){
+        std::cout << "sending input" << std::endl;
+        process->write(input.toStdString().c_str(), input.length()+1);
+    }
+    process->closeWriteChannel();
+    process->waitForReadyRead(-1);
+    process->waitForFinished(-1);
+    QString output = QString(process->readAllStandardOutput());
+    QString err = QString(process->readAllStandardError());
+
+    delete process;
+    std::cout << "-----" << std::endl;
+    std::cout << output.toStdString() << std::endl;
+    std::cout << "-----" << std::endl;
+    std::cout << err.toStdString() << std::endl;
+    std::cout << "-----" << std::endl;
+    return output;
 }

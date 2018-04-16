@@ -38,18 +38,21 @@ FORMS += \
 DISTFILES += \
     notes.txt
 
+unix|win32: LIBS += -lquazip5
+
 RESOURCES += \
     fusemuse.qrc
 
-
 win32: LIBS += -llibquazip5.dll
-
-unix:!macx: LIBS += -lquazip5
-
 
 copydata.commands = $(COPY_DIR) \"$$PWD/res\" \"$$OUT_PWD\"
 first.depends = $(first) copydata
 export(first.depends)
 export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
+
+INCLUDEPATH += C:/msys64/usr/local/include
+
+INCLUDEPATH += $$PWD/../FuseMusepp/src
+DEPENDPATH += $$PWD/../FuseMusepp/src
 
