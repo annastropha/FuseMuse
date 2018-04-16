@@ -10,6 +10,8 @@
 #include <qfiledialog.h>
 #include <qmessagebox.h>
 #include <qprocess.h>
+#include <qsysinfo.h>
+
 
 #include <iostream>
 
@@ -273,7 +275,14 @@ QString execute(QString zipPath, QString mode, QString input){
     std::cout << "Exec type: " << execType.toStdString() << std::endl;
     if (execType == "exe") {
         JlCompress::extractDir(zipPath, "./temp");
-        QString program = "./temp/main.exe";
+        QString program = "./temp/";
+        if(QSysInfo::kernelType() == "linux") {
+            program += zipInfo["linux_bin"];
+        } else if (QSysInfo::productType() == "windows") {
+            program += zipInfo["windows_bin"];
+        } else {
+            program += zipInfo["osx_bin"];
+        }
         process->start(program, QStringList());
     }else if (execType == "python") {
         QString program = "python";
