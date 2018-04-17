@@ -139,8 +139,9 @@ void MainWindow::on_actionLoad_Control_Modules_triggered()
 void MainWindow::on_addMelodicButton_clicked()
 {
     QTreeWidget* tree = ui->compositionTree;
-    QTreeWidgetItem* next = new QTreeWidgetItem(tree, Qt::UserRole);
     QString jarfile = ui->packetComboBox->currentData().toString();
+    QTreeWidgetItem* next = new QTreeWidgetItem(tree, Qt::UserRole);
+    tree->setCurrentItem(next);
     next->setText(0, packets[jarfile]["packet_name"]);
     next->setData(0, Qt::ToolTipRole, "melodic");
     next->setData(0, Qt::UserRole, QVariant(jarfile));
@@ -158,6 +159,7 @@ void MainWindow::on_addHarmonicButton_clicked()
         msgBox.exec();
     } else {
         QTreeWidgetItem* next = new QTreeWidgetItem(cur, Qt::UserRole);
+        tree->setCurrentItem(next);
         next->setText(0, packets[jarfile]["packet_name"]);
         next->setData(0, Qt::ToolTipRole, "harmonic");
         next->setData(0, Qt::UserRole, QVariant(jarfile));
@@ -244,16 +246,31 @@ std::string executeStd(std::string zipPath, std::string mode, std::string input)
     return a.toStdString();
 }
 
+void buildTreeHelper(PacketPart* node, QTreeWidgetItem* w, PacketPart* parent) {
+    FMZipInfo z = mw->packets[w->data(0, Qt::UserRole).toString()];
+    node->parent = parent;
+    node->packetPath = z["ZipFilePath"].toStdString();
+    node->mode = w->data(0, Qt::ToolTipRole).toString().toStdString();
+
+    for(int i = 0; i < w->childCount(); i++) {
+        PacketPart* newPP = new PacketPart;
+        buildTreeHelper(newPP, w->child(i), node);
+        node->children.push_back(newPP);
+    }
+}
+
+
+void buildTree(PacketPart* rootItem, QTreeWidget* uiTree) {
+    //FOR NOW only support single melodic line
+    //int numMelodic = uiTree.topLevelItemCount();
+    buildTreeHelper(rootItem, uiTree->topLevelItem(0), NULL);
+}
+
 void MainWindow::on_composeButton_clicked()
 {
-    /*QTreeWidgetItem * tli = ui->compositionTree->topLevelItem(0);
-    QString file = tli->data(0,Qt::UserRole).toString();
-    execute(packets[file]["ZipFilePath"], "melodic", "");*/
     PacketPart* tree = new PacketPart();
-    tree->mode = "melodic";
-    tree->executed = false;
-    tree->parent = NULL;
-    tree->packetPath = ui->compositionTree->topLevelItem(0)->data(0, Qt::UserRole).toString().toStdString();
+    buildTree(tree, ui->compositionTree);
+
     executeShell(executeStd, tree, ui->driverComboBox->currentData().toString().toStdString(), ui->controlComboBox->currentData().toString().toStdString());
 }
 
@@ -294,13 +311,15 @@ QString execute(QString zipPath, QString mode, QString input){
     process->waitForStarted(-1);
     if(mode.length() > 0){
         std::cout << "Mode: " << mode.toStdString() << std::endl;
-        process->write(mode.toStdString().c_str(), mode.length()+1);
-        process->write(" " , 2);
-        process->write("\n", 2);
+        process->write(mode.toStdString().c_str(), mode.length());
+        process->write(" \n" , 2);
+        process->waitForBytesWritten(-1);
     }
     if(input.length() > 0){
         std::cout << "sending input" << std::endl;
-        process->write(input.toStdString().c_str(), input.length()+1);
+        process->write(input.toStdString().c_str(), input.length());
+        process->write(" \n" , 2);
+        process->waitForBytesWritten(-1);
     }
     process->closeWriteChannel();
     process->waitForReadyRead(-1);
