@@ -276,62 +276,90 @@ void MainWindow::on_composeButton_clicked()
 
 QString execute(QString zipPath, QString mode, QString input){
 
-    std::cout << "=======\n INPUT\n=======\n" << input.toStdString() << "\n=======\n" << std::endl;
-
     QProcess *process = new QProcess(mw);
-    FMZipInfo zipInfo;
-    std::cout << "Path: " << zipPath.toStdString() << std::endl;
-    if(mode == "driver") {
-        zipInfo = mw->driverModules[zipPath];
-    } else if(mode == "control" || mode == "finalcontrol") {
-        zipInfo = mw->controlModules[zipPath];
-    } else {
-        zipInfo = mw->packets[zipPath];
-    }
-    QString execType = zipInfo["exec_type"];
-    std::cout << "Exec type: " << execType.toStdString() << std::endl;
-    if (execType == "exe") {
-        JlCompress::extractDir(zipPath, "./temp");
-        QString program = "./temp/";
-        if(QSysInfo::kernelType() == "linux") {
-            program += zipInfo["linux_bin"];
-        } else if (QSysInfo::productType() == "windows") {
-            program += zipInfo["windows_bin"];
-        } else {
-            program += zipInfo["osx_bin"];
-        }
-        process->start(program, QStringList());
-    }else if (execType == "python") {
+    if(mode == "play") {
         QString program = "python";
-        process->start(program, QStringList() << zipPath);
-    }else {// if(execType == "java") {
-        QString program = "java";
-        process->start(program, QStringList() << "-jar" << zipPath);
-    }
-    process->waitForStarted(-1);
-    if(mode.length() > 0){
-        std::cout << "Mode: " << mode.toStdString() << std::endl;
-        process->write(mode.toStdString().c_str(), mode.length());
-        process->write(" \n" , 2);
-        process->waitForBytesWritten(-1);
-    }
-    if(input.length() > 0){
-        std::cout << "sending input" << std::endl;
-        process->write(input.toStdString().c_str(), input.length());
-        process->write(" \n" , 2);
-        process->waitForBytesWritten(-1);
-    }
-    process->closeWriteChannel();
-    process->waitForReadyRead(-1);
-    process->waitForFinished(-1);
-    QString output = QString(process->readAllStandardOutput());
-    QString err = QString(process->readAllStandardError());
+        process->start(program, QStringList() << "./res/player/player.py");
 
-    delete process;
-    std::cout << "-----" << std::endl;
-    std::cout << output.toStdString() << std::endl;
-    std::cout << "-----" << std::endl;
-    std::cout << err.toStdString() << std::endl;
-    std::cout << "-----" << std::endl;
-    return output;
+        process->waitForStarted(-1);
+        if(input.length() > 0){
+            std::cout << "sending input" << std::endl;
+            process->write(input.toStdString().c_str(), input.length());
+            process->write(" \n" , 2);
+            process->waitForBytesWritten(-1);
+        }
+        process->closeWriteChannel();
+        process->waitForReadyRead(-1);
+        process->waitForFinished(-1);
+        QString output = QString(process->readAllStandardOutput());
+        QString err = QString(process->readAllStandardError());
+
+        delete process;
+        std::cout << "-----" << std::endl;
+        std::cout << output.toStdString() << std::endl;
+        std::cout << "-----" << std::endl;
+        std::cout << err.toStdString() << std::endl;
+        std::cout << "-----" << std::endl;
+        return output;
+    } else {
+
+        std::cout << "=======\n INPUT\n=======\n" << input.toStdString() << "\n=======\n" << std::endl;
+
+        QProcess *process = new QProcess(mw);
+        FMZipInfo zipInfo;
+        std::cout << "Path: " << zipPath.toStdString() << std::endl;
+        if(mode == "driver") {
+            zipInfo = mw->driverModules[zipPath];
+        } else if(mode == "control" || mode == "finalcontrol") {
+            zipInfo = mw->controlModules[zipPath];
+        } else {
+            zipInfo = mw->packets[zipPath];
+        }
+        QString execType = zipInfo["exec_type"];
+        std::cout << "Exec type: " << execType.toStdString() << std::endl;
+        if (execType == "exe") {
+            JlCompress::extractDir(zipPath, "./temp");
+            QString program = "./temp/";
+            if(QSysInfo::kernelType() == "linux") {
+                program += zipInfo["linux_bin"];
+            } else if (QSysInfo::productType() == "windows") {
+                program += zipInfo["windows_bin"];
+            } else {
+                program += zipInfo["osx_bin"];
+            }
+            process->start(program, QStringList());
+        }else if (execType == "python") {
+            QString program = "python";
+            process->start(program, QStringList() << zipPath);
+        }else {// if(execType == "java") {
+            QString program = "java";
+            process->start(program, QStringList() << "-jar" << zipPath);
+        }
+        process->waitForStarted(-1);
+        if(mode.length() > 0){
+            std::cout << "Mode: " << mode.toStdString() << std::endl;
+            process->write(mode.toStdString().c_str(), mode.length());
+            process->write(" \n" , 2);
+            process->waitForBytesWritten(-1);
+        }
+        if(input.length() > 0){
+            std::cout << "sending input" << std::endl;
+            process->write(input.toStdString().c_str(), input.length());
+            process->write(" \n" , 2);
+            process->waitForBytesWritten(-1);
+        }
+        process->closeWriteChannel();
+        process->waitForReadyRead(-1);
+        process->waitForFinished(-1);
+        QString output = QString(process->readAllStandardOutput());
+        QString err = QString(process->readAllStandardError());
+
+        delete process;
+        std::cout << "-----" << std::endl;
+        std::cout << output.toStdString() << std::endl;
+        std::cout << "-----" << std::endl;
+        std::cout << err.toStdString() << std::endl;
+        std::cout << "-----" << std::endl;
+        return output;
+    }
 }
