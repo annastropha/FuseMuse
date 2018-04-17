@@ -43,6 +43,8 @@ unix|win32: LIBS += -lquazip5
 RESOURCES += \
     fusemuse.qrc
 
+win32: LIBS += -llibquazip5.dll
+
 copydata.commands = $(COPY_DIR) \"$$PWD/res\" \"$$OUT_PWD\"
 first.depends = $(first) copydata
 export(first.depends)
@@ -53,3 +55,4 @@ INCLUDEPATH += C:/msys64/usr/local/include
 
 INCLUDEPATH += $$PWD/../FuseMusepp/src
 DEPENDPATH += $$PWD/../FuseMusepp/src
+

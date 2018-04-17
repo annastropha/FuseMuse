@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>542</width>
-    <height>523</height>
+    <width>681</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,6 +94,18 @@
       </item>
       <item>
        <widget class="QTreeWidget" name="compositionTree">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>350</width>
+          <height>0</height>
+         </size>
+        </property>
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
@@ -202,8 +214,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>542</width>
-     <height>21</height>
+     <width>681</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
