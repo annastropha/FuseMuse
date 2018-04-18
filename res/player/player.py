@@ -1,6 +1,8 @@
 from music21 import *
 import sys
 import json
+import platform
+
 
 def deserializeForPlaying(js):
     
@@ -42,6 +44,9 @@ def deserializeForPlaying(js):
     ks = key.KeySignature() #SAM HALP
   
   return sc
+
+if(platform.system() == 'Linux'):
+  environment.set('midiPath', '/usr/bin/timidity')
 
 deserializeForPlaying(json.load(sys.stdin)).show('midi')
 
