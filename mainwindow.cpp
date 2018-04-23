@@ -329,8 +329,14 @@ QString execute(QString zipPath, QString mode, QString input){
             }
             process->start(program, QStringList());
         }else if (execType == "python") {
+            QString startDir = QDir::currentPath();
+            std::cout << "Current Dir: " << QDir::currentPath().toStdString() << std::endl;
+            QDir::setCurrent("./temp");
+            std::cout << "New Dir: " << QDir::currentPath().toStdString() << std::endl;
             QString program = "python";
-            process->start(program, QStringList() << zipPath);
+            JlCompress::extractDir(zipPath, "./temp");
+            process->start(program, QStringList() << "./temp/__main__.py");
+            QDir::setCurrent(startDir);
         }else {// if(execType == "java") {
             QString program = "java";
             process->start(program, QStringList() << "-jar" << zipPath);

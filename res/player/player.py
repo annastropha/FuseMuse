@@ -21,7 +21,7 @@ def deserializeForPlaying(js):
         n.pitch.midi = newpitch
       
       if 'pitches' in new_note_json:
-        pitches = int(new_note_json['pitch'])
+        pitches = new_note_json['pitches']
         n = chord.Chord(pitches)
       dur = new_note_json['duration'] / 96.0;
       n.duration.quarterLength = dur
