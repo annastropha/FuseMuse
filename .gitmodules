@@ -1,0 +1,3 @@
+[submodule "FuseMusepp"]
+	path = FuseMusepp
+	url = https://github.com/Riounis/FuseMusepp.git
