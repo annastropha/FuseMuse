@@ -12,8 +12,9 @@ Repository for FuseMuse, a Qt-based application for highly modular fusional proc
 #### Setup
 
 1. Clone the FuseMuse repository
-    1. At this point, if you want to use Qt Creator, you are ready
 2. `cd` into it; Run `git submodule init; git submodule update`
+
+At this point, if you want to use Qt Creator, you are ready
 
 #### Build
 
