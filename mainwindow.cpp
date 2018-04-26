@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <quazip5/quazip.h>
-#include <quazip5/quazipfile.h>
-#include <quazip5/JlCompress.h>
+#include <quazip/quazip.h>
+#include <quazip/quazipfile.h>
+#include <quazip/JlCompress.h>
 
 #include <qdir.h>
 #include <qfile.h>

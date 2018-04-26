@@ -41,8 +41,7 @@ DISTFILES += \
 RESOURCES += \
     fusemuse.qrc
 
-unix|win32: LIBS += -lquazip5
-win32: LIBS += -llibquazip5.dll
+unix|win32: LIBS += -lquazip
 
 copydata.commands = $(COPY_DIR) \"$$PWD/res\" \"$$OUT_PWD\"
 first.depends = $(first) copydata

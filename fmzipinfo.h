@@ -4,7 +4,7 @@
 #include <QMap>
 #include <QFile>
 
-#include <quazip5/quazipfile.h>
+#include <quazip/quazipfile.h>
 
 class FMZipInfo
 {
