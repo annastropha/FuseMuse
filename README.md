@@ -27,3 +27,7 @@ A FuseMuse executable should now be ready to use in the current directory.  The 
 ### Adding Modules to FuseMuse
 
 Additional Packets, Driver Modules, and Control Modules for FuseMuse can be found at https://github.com/Riounis/FuseMuseModules. To add these to your build of FuseMuse, simply download the zip or jar file for the module you want to use and add it to your default packets, default driver modules, or default control modules folder in your FuseMuse build.
+
+### Music Library
+
+If you want to use the FuseMuse music library for your project that does not need to incorporate the FuseMuse procedural generation engine, it can be found at https://github.com/Riounis/libfm.
