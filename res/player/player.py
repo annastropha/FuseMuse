@@ -17,8 +17,11 @@ def deserializeForPlaying(js):
     for new_note_json in partjson["events"]:
       if 'pitch' in new_note_json:
         newpitch = int(new_note_json['pitch'])
-        n = note.Note()
-        n.pitch.midi = newpitch
+        if newpitch is 127:
+          n = note.Rest()
+        else:
+          n = note.Note()
+          n.pitch.midi = newpitch
       
       if 'pitches' in new_note_json:
         pitches = new_note_json['pitches']
