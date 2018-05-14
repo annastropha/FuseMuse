@@ -15,8 +15,8 @@
 
 #include <iostream>
 
-#include <libfm/utilities.h>
-#include <libfm/packetpart.h>
+#include <utilities.h>
+#include <packet_part.h>
 
 
 
@@ -248,14 +248,14 @@ std::string executeStd(std::string zipPath, std::string mode, std::string input)
 
 void buildTreeHelper(PacketPart* node, QTreeWidgetItem* w, PacketPart* parent) {
     FMZipInfo z = mw->packets[w->data(0, Qt::UserRole).toString()];
-    node->parent = parent;
-    node->packetPath = z["ZipFilePath"].toStdString();
-    node->mode = w->data(0, Qt::ToolTipRole).toString().toStdString();
+    node->set_parent(parent);
+    node->set_packet_path(z["ZipFilePath"].toStdString());
+    node->set_mode(w->data(0, Qt::ToolTipRole).toString().toStdString());
 
     for(int i = 0; i < w->childCount(); i++) {
         PacketPart* newPP = new PacketPart;
         buildTreeHelper(newPP, w->child(i), node);
-        node->children.push_back(newPP);
+        node->append_child(newPP);
     }
 }
 
@@ -270,7 +270,6 @@ void MainWindow::on_composeButton_clicked()
 {
     PacketPart* tree = new PacketPart();
     buildTree(tree, ui->compositionTree);
-
     executeShell(executeStd, tree, ui->driverComboBox->currentData().toString().toStdString(), ui->controlComboBox->currentData().toString().toStdString());
 }
 
@@ -295,11 +294,11 @@ QString execute(QString zipPath, QString mode, QString input){
         QString err = QString(process->readAllStandardError());
 
         delete process;
-        std::cout << "-----" << std::endl;
+        std::cout << "-----out-----" << std::endl;
         std::cout << output.toStdString() << std::endl;
-        std::cout << "-----" << std::endl;
+        std::cout << "-----err-----" << std::endl;
         std::cout << err.toStdString() << std::endl;
-        std::cout << "-----" << std::endl;
+        std::cout << "-----end-----" << std::endl;
         return output;
     } else {
 
@@ -361,11 +360,11 @@ QString execute(QString zipPath, QString mode, QString input){
         QString err = QString(process->readAllStandardError());
 
         delete process;
-        std::cout << "-----" << std::endl;
+        std::cout << "-----out-----" << std::endl;
         std::cout << output.toStdString() << std::endl;
-        std::cout << "-----" << std::endl;
+        std::cout << "-----err-----" << std::endl;
         std::cout << err.toStdString() << std::endl;
-        std::cout << "-----" << std::endl;
+        std::cout << "-----end-----" << std::endl;
         return output;
     }
 }
