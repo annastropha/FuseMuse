@@ -1,9 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#ifdef Q_OS_UNIX
+#include <quazip5/quazip.h>
+#include <quazip5/quazipfile.h>
+#include <quazip5/JlCompress.h>
+#else
 #include <quazip/quazip.h>
 #include <quazip/quazipfile.h>
 #include <quazip/JlCompress.h>
+#endif
 
 #include <qdir.h>
 #include <qfile.h>

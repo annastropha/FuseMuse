@@ -4,7 +4,13 @@
 #include <QMap>
 #include <QFile>
 
+#ifdef Q_OS_UNIX
+#include <quazip5/quazip.h>
+#include <quazip5/quazipfile.h>
+#else
+#include <quazip/quazip.h>
 #include <quazip/quazipfile.h>
+#endif
 
 class FMZipInfo
 {
