@@ -33,8 +33,8 @@ def deserializeForPlaying(js):
   
   for met in metrics:
     ts = meter.TimeSignature()
-    ts.numerator = met['timeSignature']['num']
-    ts.denominator = met['timeSignature']['denom']
+    ts.numerator = met['time_signature']['num']
+    ts.denominator = met['time_signature']['denom']
     a = tempo.MetronomeMark('tempoChange', met['tempo'])
     intervals = met['key']['intervals']
     tonic = met['key']['tonic']

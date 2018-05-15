@@ -275,6 +275,7 @@ void MainWindow::on_composeButton_clicked()
 
 QString execute(QString zipPath, QString mode, QString input){
 
+    std::cout << "=======\nMODE\n=======\n" << mode.toStdString() << "\n=======\n" << std::endl;
     QProcess *process = new QProcess(mw);
     if(mode == "play") {
         QString program = "python";
