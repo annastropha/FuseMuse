@@ -49,9 +49,9 @@ export(first.depends)
 export(copydata.commands)
 QMAKE_EXTRA_TARGETS += first copydata
 
-INCLUDEPATH += $$PWD/FuseMusepp/deps
-DEPENDPATH += $$PWD/FuseMusepp/deps
+INCLUDEPATH += $$PWD/libfm/deps
+DEPENDPATH += $$PWD/libfm/deps
 
-INCLUDEPATH += $$PWD/FuseMusepp/src
-DEPENDPATH += $$PWD/FuseMusepp/src
+INCLUDEPATH += $$PWD/libfm/src
+DEPENDPATH += $$PWD/libfm/src
 
