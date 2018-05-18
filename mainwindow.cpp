@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#ifdef Q_OS_UNIX
+#ifdef __linux__
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
 #include <quazip5/JlCompress.h>

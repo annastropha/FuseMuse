@@ -4,7 +4,7 @@
 #include <QMap>
 #include <QFile>
 
-#ifdef Q_OS_UNIX
+#ifdef __linux__
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
 #else
