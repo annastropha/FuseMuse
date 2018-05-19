@@ -333,12 +333,17 @@ QString execute(QString zipPath, QString mode, QString input){
             } else {
                 program += zipInfo["osx_bin"];
             }
+            std::cout << program.toStdString() << std::endl;
+            std::cout << zipInfo["exec_type"].toStdString() << std::endl;
+            std::cout << zipInfo["windows_bin"].toStdString() << std::endl;
+            std::cout << zipInfo["linux_bin"].toStdString() << std::endl;
+            std::cout << zipInfo["osx_bin"].toStdString() << std::endl;
+            QFile exe(program);
+            exe.setPermissions(exe.permissions() | QFileDevice::ExeOther | QFileDevice::ExeGroup | QFileDevice::ExeUser);
             process->start(program, QStringList());
         }else if (execType == "python") {
             QString startDir = QDir::currentPath();
-            std::cout << "Current Dir: " << QDir::currentPath().toStdString() << std::endl;
             QDir::setCurrent("./temp");
-            std::cout << "New Dir: " << QDir::currentPath().toStdString() << std::endl;
             QString program = "python";
             JlCompress::extractDir(zipPath, ".");
             process->start(program, QStringList() << "./__main__.py");
