@@ -1,0 +1,84 @@
+.header {
+    background-image: url("music.png");
+    min-height: 120px; 
+}
+
+body {
+    background-color: #ffffff;
+}
+
+.logo {
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+	background-color: #222222;
+	overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+	float: left;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+	background-color: #5c009a;
+    color: #ffffff;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+	background-color: #44633f;
+    color: black;
+}
+
+.vertical-divider {
+    width: 100%;
+}
+
+.left-container {
+    float: left;
+    width: 40%;
+}
+
+.right-container {
+    width: 60%;
+    float: right;
+}
+
+.profile {
+    padding-left: 10px;
+    max-width: 50%;
+    word-wrap: normal;
+}
+
+.initialvid {
+    
+}
+
+.hanging {
+    padding-top: 7.25%;
+    padding-right: 7.5%;
+    padding-left: 7.5%;
+    padding-bottom: 7.25%;
+}
+
+.headshot {
+    float: left;
+}
+
+.clear {
+    clear: both;
+}
+
+.contributors {
+    padding-left: 11%;
+}
