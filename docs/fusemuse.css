@@ -70,8 +70,7 @@ body {
 }
 
 .profile {
-    	padding-left: 10px;
-    	max-width: 50%;
+    	max-width: 100%;
     	word-wrap: normal;
 }
 
