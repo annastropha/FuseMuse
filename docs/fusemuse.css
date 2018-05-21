@@ -52,6 +52,7 @@ body {
 .left-container {
     	float: left;
     	width: 40%;
+	text-align: center;
 }
 
 .right-container {
