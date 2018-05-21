@@ -1,15 +1,15 @@
 .header {
-    background-image: url("music.png");
-    min-height: 120px; 
+    	background-image: url("music.png");
+    	min-height: 120px; 
 }
 
 body {
-    background-color: #ffffff;
+    	background-color: #ffffff;
 }
 
 .logo {
-    padding-top: 10px;
-    padding-left: 10px;
+    	padding-top: 10px;
+    	padding-left: 10px;
 }
 
 /* Add a black background color to the top navigation */
@@ -17,6 +17,7 @@ body {
 	background-color: #222222;
 	overflow: hidden;
 	text-align: center;
+	display: inline-block;
 }
 
 /* Style the links inside the navigation bar */
