@@ -16,13 +16,11 @@ body {
 .topnav {
 	background-color: #222222;
 	overflow: hidden;
-	text-align: center;
-	display: inline-block;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-	float: left;
+	float: center;
 	color: #f2f2f2;
 	text-align: center;
 	padding: 14px 16px;
@@ -33,33 +31,33 @@ body {
 /* Change the color of links on hover */
 .topnav a:hover {
 	background-color: #5c009a;
-    color: #ffffff;
+    	color: #ffffff;
 }
 
 /* Add a color to the active/current link */
 .topnav a.active {
 	background-color: #44633f;
-    color: black;
+    	color: black;
 }
 
 .vertical-divider {
-    width: 100%;
+    	width: 100%;
 }
 
 .left-container {
-    float: left;
-    width: 40%;
+    	float: left;
+    	width: 40%;
 }
 
 .right-container {
-    width: 60%;
-    float: right;
+   	width: 60%;
+    	float: right;
 }
 
 .profile {
-    padding-left: 10px;
-    max-width: 50%;
-    word-wrap: normal;
+    	padding-left: 10px;
+    	max-width: 50%;
+    	word-wrap: normal;
 }
 
 .initialvid {
@@ -67,20 +65,20 @@ body {
 }
 
 .hanging {
-    padding-top: 7.25%;
-    padding-right: 7.5%;
-    padding-left: 7.5%;
-    padding-bottom: 7.25%;
+    	padding-top: 7.25%;
+    	padding-right: 7.5%;
+    	padding-left: 7.5%;
+    	padding-bottom: 7.25%;
 }
 
 .headshot {
-    float: left;
+    	float: left;
 }
 
 .clear {
-    clear: both;
+    	clear: both;
 }
 
 .contributors {
-    padding-left: 11%;
+    	padding-left: 11%;
 }
