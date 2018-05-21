@@ -12,6 +12,10 @@ body {
     	padding-left: 10px;
 }
 
+.topnav-box {
+	text-align: center;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
 	background-color: #222222;
