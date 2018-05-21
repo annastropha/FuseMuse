@@ -52,12 +52,21 @@ body {
 .left-container {
     	float: left;
     	width: 40%;
-	text-align: center;
 }
 
 .right-container {
    	width: 60%;
     	float: right;
+}
+
+.left-column {
+	width: 50%;
+	float: left;
+}
+
+.right-column {
+	width: 50%;
+	float: right;
 }
 
 .profile {
