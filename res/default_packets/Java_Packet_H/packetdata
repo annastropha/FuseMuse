@@ -1,0 +1,8 @@
+FMPacket_class_name = CounterpointPlayer
+can_play_melody = false
+can_play_harmony = true
+can_play_support = false
+packet_name = First Species Counterpoint Player with Key Preference and key-based intervals
+packet_description = packet_description = Plays counterpoint against parent, first species duplicating rhythm values from parent.  Experiment 3: prefer to stick to the key
+instrument = 110
+exec_type = java

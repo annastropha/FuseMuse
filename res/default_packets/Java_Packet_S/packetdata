@@ -1,0 +1,8 @@
+FMPacket_class_name = SimpleSupport
+can_play_melody = false
+can_play_harmony = false
+can_play_support = true
+packet_name = Least Simple Support Test 1
+packet_description = Test
+instrument = 12
+exec_type = java

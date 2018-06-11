@@ -10,14 +10,13 @@ FMZipInfo::FMZipInfo(QString filePath)
 {
     data.insert("ZipFilePath",filePath);
 
-    QuaZip zip(filePath);
-    zip.open(QuaZip::mdUnzip);
-    zip.setCurrentFile("packetdata");
-    QuaZipFile qzFile(&zip);
-    qzFile.open(QIODevice::ReadOnly);
+    QFile packetdata(filePath + "/packetdata");
+    packetdata.open(QIODevice::ReadOnly | QIODevice::Text);
 
-    while(!qzFile.atEnd()) {
-        QString line = qzFile.readLine();
+
+    while(!packetdata.atEnd()) {
+        QString line = packetdata.readLine();
+        std::cout << line.toStdString() << std::endl;
         line.remove(QChar('\n'));
         QStringList parts = line.split("=");
         QString propName = parts[0].trimmed();
@@ -29,7 +28,7 @@ FMZipInfo::FMZipInfo(QString filePath)
         data.insert(propName, propVal);
     }
 
-    qzFile.close();
+    packetdata.close();
 }
 
 QString& FMZipInfo::operator[](QString key) {

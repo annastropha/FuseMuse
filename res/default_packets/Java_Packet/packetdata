@@ -1,0 +1,8 @@
+FMPacket_class_name = IntervalMarkovChainPacket
+can_play_melody = true
+can_play_harmony = false
+can_play_support = false
+packet_name = IntervalMarkovChainPacketTest
+packet_description = Test
+instrument = 110
+exec_type = java

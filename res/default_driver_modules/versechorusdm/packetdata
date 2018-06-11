@@ -1,0 +1,6 @@
+driver_name = Verse Chorus Driver Module
+driver_description = This driver module produces a song pattern typical of the verse-chorus style. It also chooses keys, time signatures, and tempos gathered from popular music.
+exec_type = exe
+windows_bin = versechorusdm_win.exe
+linux_bin = versechorusdm_linux
+osx_bin = versechorusdm_mac

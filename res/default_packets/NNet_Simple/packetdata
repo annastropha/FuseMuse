@@ -1,0 +1,7 @@
+can_play_melody = true
+can_play_harmony = false
+can_play_support = false
+packet_name = Two Neural Network Packet
+packet_description = Uses a pair of neural networks which generate sequences of pitches and note durations from the output of each other and their own memories
+instrument = 12
+exec_type = python

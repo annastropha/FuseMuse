@@ -51,12 +51,13 @@ void MainWindow::loadZips(QString path, QString namePropName, QComboBox *selecto
     std::cout << "Current Dir: " << QDir::currentPath().toStdString() << std::endl;
     QDir::setCurrent(path);
     std::cout << "New Dir: " << QDir::currentPath().toStdString() << std::endl;
-    QFileInfoList files = QDir::current().entryInfoList();
+    QFileInfoList files = QDir::current().entryInfoList(QDir::NoDotAndDotDot | QDir::AllDirs);
     std::cout << "Count: " << files.length() << std::endl;
 
     for(QFileInfo f : files) {
         std::cout << "File: " << f.completeBaseName().toStdString() << '.' << f.suffix().toStdString() << std::endl;
-        if(f.suffix() == "jar" || f.suffix() == "zip") {
+        if(f.isDir()) {
+            std::cout << "Directory: " << f.completeBaseName().toStdString() << '.' << f.suffix().toStdString() << std::endl;
             FMZipInfo i(f.absoluteFilePath());
             QString key = i["ZipFilePath"];
             int matchIndex = map.size();
@@ -274,9 +275,13 @@ void buildTree(PacketPart* rootItem, QTreeWidget* uiTree) {
 
 void MainWindow::on_composeButton_clicked()
 {
+    std::cout << "TEST1" << std::endl;
     PacketPart* tree = new PacketPart();
+    std::cout << "TEST2" << std::endl;
     buildTree(tree, ui->compositionTree);
+    std::cout << "TEST3" << std::endl;
     executeShell(executeStd, tree, ui->driverComboBox->currentData().toString().toStdString(), ui->controlComboBox->currentData().toString().toStdString());
+    std::cout << "TEST4" << std::endl;
 }
 
 QString execute(QString zipPath, QString mode, QString input){
@@ -324,8 +329,7 @@ QString execute(QString zipPath, QString mode, QString input){
         QString execType = zipInfo["exec_type"];
         std::cout << "Exec type: " << execType.toStdString() << std::endl;
         if (execType == "exe") {
-            JlCompress::extractDir(zipPath, "./temp");
-            QString program = "./temp/";
+            QString program = zipPath + "/";
             if(QSysInfo::kernelType() == "linux") {
                 program += zipInfo["linux_bin"];
             } else if (QSysInfo::productType() == "windows") {
@@ -343,14 +347,17 @@ QString execute(QString zipPath, QString mode, QString input){
             process->start(program, QStringList());
         }else if (execType == "python") {
             QString startDir = QDir::currentPath();
-            QDir::setCurrent("./temp");
+            QDir::setCurrent(zipPath);
             QString program = "python";
             JlCompress::extractDir(zipPath, ".");
             process->start(program, QStringList() << "./__main__.py");
             QDir::setCurrent(startDir);
         }else {// if(execType == "java") {
+            QString startDir = QDir::currentPath();
+            QDir::setCurrent(zipPath);
             QString program = "java";
-            process->start(program, QStringList() << "-jar" << zipPath);
+            process->start(program, QStringList() << "FMPacketWrapper");
+            QDir::setCurrent(startDir);
         }
         process->waitForStarted(-1);
         if(mode.length() > 0){
