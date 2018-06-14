@@ -41,10 +41,6 @@ DISTFILES += \
 RESOURCES += \
     fusemuse.qrc
 
-win32: LIBS += -lquazip
-
-unix:!macx: LIBS += -lquazip5
-
 copydata.commands = $(COPY_DIR) \"$$PWD/res\" \"$$OUT_PWD\"
 first.depends = $(first) copydata
 export(first.depends)
@@ -56,10 +52,3 @@ DEPENDPATH += $$PWD/libfm/deps
 
 INCLUDEPATH += $$PWD/libfm/src
 DEPENDPATH += $$PWD/libfm/src
-
-macx {
-    LIBS += -L$$PWD/../../../../../usr/local/Cellar/quazip/0.7.3_1/lib/ -lquazip.1.0.0
-
-    INCLUDEPATH += $$PWD/../../../../../usr/local/Cellar/quazip/0.7.3_1/include
-    DEPENDPATH += $$PWD/../../../../../usr/local/Cellar/quazip/0.7.3_1/include
-}

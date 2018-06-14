@@ -2,11 +2,9 @@
 #include "ui_mainwindow.h"
 
 #ifdef __linux__
-#include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
 #include <quazip5/JlCompress.h>
 #else
-#include <quazip/quazip.h>
 #include <quazip/quazipfile.h>
 #include <quazip/JlCompress.h>
 #endif
